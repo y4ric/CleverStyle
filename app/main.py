@@ -13,10 +13,7 @@ app = FastAPI(
 )
 
 Base.metadata.create_all(bind=engine)
-app.include_router(auth_router)
-app.include_router(cars_router)
-app.include_router(users_router)
-app.include_router(favourite_router)
+
 
 
 
