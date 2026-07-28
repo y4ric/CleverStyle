@@ -11,13 +11,6 @@ class Style(Base):
     name: Mapped[str] = mapped_column(String , nullable=False)
 
     description: Mapped[str] = mapped_column(String , nullable=False)
-class Clothes(Base):
-    __tablename__ = 'clothes'
 
-    clothes_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    url_picture: Mapped[str] = mapped_column(String, nullable=False)
 
-    name: Mapped[str] = mapped_column(String , nullable=False)
-
-    brand: Mapped[str] = mapped_column(String , nullable=False)
-
-    description: Mapped[str] = mapped_column(String , nullable=False)
