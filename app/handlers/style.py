@@ -45,7 +45,7 @@ def get_styles(
     service: StyleService = Depends(get_style_service),
 ):
     return service.get_styles()
-@router.put("/{car_id}")
+@router.put("/{style_id}")
 def update_style(
     style_id: int,
     schema: StyleCreate,  # или ваша специальная схема для обновления, например CarUpdate

@@ -3,10 +3,10 @@ from fastapi import FastAPI
 
 from app.config.config import get_settings
 from app.database import Base, engine
-#from app.handlers.auth import router as auth_router
+from app.handlers.auth import router as auth_router
 from app.handlers.style import router as style_router
-#from app.handlers.users import router as users_router
-
+from app.handlers.users import router as users_router
+from app.handlers.clothes import router as clothes_router
 #from app.handlers.favourite import router as favourite_router
 
 settings = get_settings()
@@ -17,9 +17,10 @@ app = FastAPI(
 )
 
 Base.metadata.create_all(bind=engine)
-#app.include_router(auth_router)
+app.include_router(auth_router)
 app.include_router(style_router)
-#app.include_router(users_router)
+app.include_router(clothes_router)
+app.include_router(users_router)
 #app.include_router(favourite_router)
 
 

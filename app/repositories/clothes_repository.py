@@ -21,7 +21,9 @@ class ClothesRepository:
     def create(self, clothes) -> Clothes:
         new_clothes = Clothes(
             name=clothes.name,
-            description=clothes.description,
+            category=clothes.category,
+            style=clothes.style,
+            color=clothes.color,
             url_picture=clothes.url_picture
         )
 
