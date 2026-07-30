@@ -8,7 +8,8 @@ from app.handlers.style import router as style_router
 from app.handlers.users import router as users_router
 from app.handlers.clothes import router as clothes_router
 #from app.handlers.favourite import router as favourite_router
-
+from app.handlers.favouritesStyles import router as favourites_styles_router
+from app.handlers.favouritesClothes import router as favourites_clothes_router
 settings = get_settings()
 app = FastAPI(
     title=settings.app_name,
@@ -21,7 +22,8 @@ app.include_router(auth_router)
 app.include_router(style_router)
 app.include_router(clothes_router)
 app.include_router(users_router)
-#app.include_router(favourite_router)
+app.include_router(favourites_styles_router)
+app.include_router(favourites_clothes_router)
 
 
 @app.get("/")
