@@ -10,6 +10,12 @@ from app.handlers.clothes import router as clothes_router
 #from app.handlers.favourite import router as favourite_router
 from app.handlers.favouritesStyles import router as favourites_styles_router
 from app.handlers.favouritesClothes import router as favourites_clothes_router
+# В блоке импортов вверху файла:
+from app.handlers.looks import router as looks_router
+
+# Ниже, где у тебя подключаются другие роутеры (app.include_router):
+
+
 settings = get_settings()
 app = FastAPI(
     title=settings.app_name,
@@ -24,7 +30,7 @@ app.include_router(clothes_router)
 app.include_router(users_router)
 app.include_router(favourites_styles_router)
 app.include_router(favourites_clothes_router)
-
+app.include_router(looks_router)
 
 @app.get("/")
 def read_root() -> dict[str, str]:

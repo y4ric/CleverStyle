@@ -7,8 +7,8 @@ from app.services.style_service import StyleService
 
 
 router = APIRouter(
-    prefix="/style",
-    tags=["style"],
+    prefix="/styles",
+    tags=["styles"],
 )
 
 def get_style_service(
