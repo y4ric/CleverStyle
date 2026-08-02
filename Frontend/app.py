@@ -143,6 +143,12 @@ views = {
             icon=":material/style:",
             url_path="style-details",
         ),
+        st.Page(
+            "views/look_details.py",
+            title="Состав образа",
+            icon=":material/analytics:",
+            url_path="look-details",
+        ),
     ],
 
     "Пользователь": [
@@ -190,17 +196,30 @@ if is_admin():
             url_path="create-style",
         ),
         st.Page(
-            "views/edit_cloth.py",  # <-- УБРАЛИ Frontend/
+            "views/edit_cloth.py",
             title="Редактировать вещь",
             icon=":material/edit_note:",
             url_path="edit-cloth",
         ),
         st.Page(
-            "views/edit_style.py",  # <-- УБРАЛИ Frontend/
+            "views/edit_style.py",
             title="Редактировать стиль",
             icon=":material/edit_calendar:",
             url_path="edit-style",
         ),
+        st.Page(
+            "views/create_look.py",
+            title="Создать образ (Лук)",
+            icon=":material/add_photo_alternate:",
+            url_path="create-look",
+        ),
+        st.Page(
+            "views/add_to_capsule.py",
+            title="Собрать капсулу (Админка)",
+            icon=":material/extension:",
+            url_path="build-capsule",
+        ),
+
     ]
 
 

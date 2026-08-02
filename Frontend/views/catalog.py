@@ -2,6 +2,9 @@ import requests
 import streamlit as st
 from api.client import get_error_message, get_styles
 
+# 1. ОБЯЗАТЕЛЬНО ИМПОРТИРУЕМ НАШУ ГОТОВУЮ КАРТОЧКУ СТИЛЯ С ИЗБРАННЫМ
+from components.item_card import render_style_card
+
 st.title("✨ Умный стилист CleverStyle")
 st.write("Выберите направление стиля, чтобы посмотреть готовые капсулы и образы.")
 st.markdown("---")
@@ -21,21 +24,6 @@ if styles_response.ok:
         style_cols = st.columns(3)
         for idx, style_item in enumerate(styles):
             with style_cols[idx % 3]:
-                with st.container(border=True):
-                    # Показываем обложку стиля
-                    if style_item.get("url_picture"):
-                        try:
-                            st.image(style_item["url_picture"], use_container_width=True)
-                        except Exception:
-                            st.warning("Не удалось загрузить обложку")
-
-                    st.markdown(f"### {style_item['name']}")
-                    st.caption(style_item.get("description", "Описание отсутствует"))
-                    st.write("")
-
-                    # Кнопка перехода внутрь стиля к образам
-                    if st.button("🗺️ Открыть образы стиля", key=f"open_style_btn_{style_item['style_id']}",
-                                 use_container_width=True):
-                        st.session_state["selected_style_id"] = style_item["style_id"]
-                        st.session_state["selected_style_name"] = style_item["name"]
-                        st.switch_page("views/style_details.py")
+                # 2. ЗАМЕНИЛИ ВЕСЬ РУЧНОЙ КОД НА ОДНУ СИСТЕМНУЮ ФУНКЦИЮ!
+                # Она сама выведет картинку, описание, кнопку Избранного и кнопку перехода
+                render_style_card(style_item, key_prefix=f"catalog_style_{idx}")

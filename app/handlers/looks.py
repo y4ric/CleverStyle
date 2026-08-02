@@ -48,3 +48,53 @@ def get_clothes_for_look(look_id: int, db: Session = Depends(get_db)):
         .all()
     )
     return clothes_in_look
+# Не забудь импортировать Pydantic-схему для создания, если используешь валидацию,
+# либо временно прими данные как dict/BaseModel. Вот простой вариант:
+from pydantic import BaseModel
+
+class LookCreateSchema(BaseModel):
+    name: str
+    style_id: int
+    url_picture: str
+
+@router.post("/looks/")
+def create_new_look(schema: LookCreateSchema, db: Session = Depends(get_db)):
+    new_look = Look(
+        name=schema.name,
+        style_id=schema.style_id,
+        url_picture=schema.url_picture
+    )
+    db.add(new_look)
+    db.commit()
+    db.refresh(new_look)
+    return new_look
+
+
+from pydantic import BaseModel
+
+
+# Схема для получения данных с фронтенда
+class LinkClothesSchema(BaseModel):
+    look_id: int
+    clothes_id: int
+
+
+@router.post("/looks/add-clothes/")
+def add_clothes_to_look(schema: LinkClothesSchema, db: Session = Depends(get_db)):
+    # Проверяем, нет ли уже такой шмотки в этом образе, чтобы не дублировать
+    exists = db.query(LookClothes).filter(
+        LookClothes.look_id == schema.look_id,
+        LookClothes.clothes_id == schema.clothes_id
+    ).first()
+
+    if exists:
+        return {"status": "info", "message": "Эта вещь уже есть в образе"}
+
+    # Создаем новую запись в таблице связей
+    new_link = LookClothes(
+        look_id=schema.look_id,
+        clothes_id=schema.clothes_id
+    )
+    db.add(new_link)
+    db.commit()
+    return {"status": "success", "message": "Вещь успешно добавлена в образ"}

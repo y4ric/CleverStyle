@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String , Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -14,3 +14,4 @@ class Style(Base):
 
     url_picture: Mapped[str] = mapped_column(String, nullable=False)
 
+    favorites_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)

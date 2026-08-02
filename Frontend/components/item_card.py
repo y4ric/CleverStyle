@@ -172,9 +172,9 @@ def render_style_card(item: dict, key_prefix: str = "style_card") -> None:
     style_id = item["style_id"]
 
     with st.container(border=True):
-        if item.get("url_cover"):  # У стилей обложка называется url_cover
+        if item.get("url_picture"):  # Проверь, как называется поле обложки у стиля (url_picture или url_cover)
             try:
-                st.image(item["url_cover"], use_container_width=True)
+                st.image(item["url_picture"], use_container_width=True)
             except Exception:
                 st.warning("Не удалось загрузить изображение обложки")
         else:
@@ -193,21 +193,22 @@ def render_style_card(item: dict, key_prefix: str = "style_card") -> None:
 
         # Название стиля
         st.markdown(
-            f"<div style='height: 60px; overflow: hidden;'><h3 style='margin:0; padding:0; font-size:1.3rem; font-weight:600; color:#1E3A8A;'>{item['name']}</h3></div>",
+            f"<div style='height: 40px; overflow: hidden;'><h3 style='margin:0; padding:0; font-size:1.3rem; font-weight:600; color:#1E3A8A;'>{item['name']}</h3></div>",
             unsafe_allow_html=True
         )
 
         # Философия / описание стиля
         desc_text = item.get("description", "") or "Описание стиля отсутствует."
         st.markdown(
-            f"<div style='height: 75px; overflow: hidden; font-size:0.95rem; color:#31333F; line-height:1.4;'>{desc_text}</div>",
+            f"<div style='height: 65px; overflow: hidden; font-size:0.95rem; color:#31333F; line-height:1.4;'>{desc_text}</div>",
             unsafe_allow_html=True
         )
 
-        # Кнопка избранного для стиля
+        # 1. ВЫЗЫВАЕМ КНОПКУ ИЗБРАННОГО ДЛЯ СТИЛЯ (Теперь она появится на экране!)
         render_favorite_style_button(item, key_prefix=key_prefix)
 
-        if st.button("Открыть капсулу стиля", key=f"style_details_btn_{style_id}"):
+        # 2. Кнопка открытия образов стиля
+        if st.button("🗺️ Открыть образы стиля", key=f"style_details_btn_{style_id}", use_container_width=True):
             st.session_state["selected_style_id"] = style_id
             st.session_state["selected_style_name"] = item["name"]
-            st.switch_page("views/style_capsule.py")
+            st.switch_page("views/style_details.py")

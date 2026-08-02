@@ -186,3 +186,11 @@ def get_error_message(response: requests.Response) -> str:
         return str(detail or f"Ошибка backend: HTTP {response.status_code}")
     except ValueError:
         return f"Ошибка backend: HTTP {response.status_code}"
+def create_look(payload: dict) -> requests.Response:
+    """Создать новый готовый образ/лук (Админка)"""
+    # Запрос улетит на эндпоинт, который мы настраивали в handlers/looks.py
+    return request_with_authorization_header("POST", f"{BACKEND_URL}/looks/", payload=payload)
+def link_clothes_to_look(look_id: int, clothes_id: int) -> requests.Response:
+    """Привязать конкретную вещь к образу"""
+    payload = {"look_id": look_id, "clothes_id": clothes_id}
+    return request_with_authorization_header("POST", f"{BACKEND_URL}/looks/add-clothes/", payload=payload)
